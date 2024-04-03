@@ -9,7 +9,6 @@ def clean(input):
     
 
 def phase_one(input):
-    print("---pass one begins---")
     for line in range(len(input)):
         # print(i)
         i = input[line]
@@ -30,12 +29,34 @@ def phase_one(input):
 
     print_mdt()
     print_mnt()
-    print("---pass one ends---")
-    phase_two()
+
+def check_for_macro(line):
+    if len(line) < 2:
+        return -1
+    
+    for name in MNT:
+        if line[0] in name and line[1].lower() != 'macro':
+            return name[0]
+
+    return -1
 
 def phase_two():
-    print("---pass two begins---")
-    print("---pass two ends---")
+    # print(input)
+    res = []
+    for i in range(len(input)):
+        line = input[i]
+        temp = line.split(' ')
+        index = check_for_macro(temp)
+        if index != -1:
+            while (MDT[index].lower() != "endm"):
+                temp_line = MDT[index]
+                if 'XX' in temp_line:
+                    temp_line = temp_line.replace("XX", temp[1])
+                res.append(temp_line)
+                index += 1
+        else:
+            res.append(line)
+    return res
 
 def print_mdt():
     mdt_table.field_names = ["Index", "MDT"]
@@ -61,4 +82,8 @@ with open('input.asm','r') as f:
 input = clean(input)
 # print(input)
 phase_one(input)
+res = phase_two()
 
+print('\n--------------OUTPUT--------------------')
+for i in res:
+    print(i)
