@@ -82,5 +82,8 @@ z = b + c
 idk = e + f
 """
 
+print("-------------Input--------------")
+print(input)
 cleaned_input = clean(input)
+print("-------------Output--------------")
 print(remove_common_subexpression(cleaned_input))
