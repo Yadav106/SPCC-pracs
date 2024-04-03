@@ -80,6 +80,7 @@ e = b + c
 g = e + f
 z = b + c
 idk = e + f
+j = e + f
 """
 
 print("-------------Input--------------")
