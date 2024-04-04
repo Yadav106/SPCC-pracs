@@ -1,6 +1,5 @@
 def clean(input):
     op = ['+', '-', '*', '/', '=']
-    input = input.split('\n')
     input = [i.strip() for i in input]
     input = [i for i in input if len(i) > 0]
 
@@ -73,18 +72,15 @@ def remove_common_subexpression(input):
     res = "\n".join(new_expressions)
     return res
 
-input = """
-a = b + c
-d = e + f
-e = b + c
-g = e + f
-z = b + c
-idk = e + f
-j = e + f
-"""
+input_data = []
+print("Enter all expressions, write 'end' when finished")
+while True:
+    user_input = input()
+    user_input.strip()
+    if user_input.lower() == "end":
+        break
+    input_data.append(user_input)
 
-print("-------------Input--------------")
-print(input)
-cleaned_input = clean(input)
+cleaned_input = clean(input_data)
 print("-------------Output--------------")
 print(remove_common_subexpression(cleaned_input))
