@@ -1,6 +1,7 @@
 from prettytable import PrettyTable
 mdt_table = PrettyTable()
 mnt_table = PrettyTable()
+ala_table = PrettyTable()
 
 def clean(input):
     input = input.split("\n")
@@ -41,13 +42,13 @@ def check_for_macro(line):
     return -1
 
 def phase_two():
-    # print(input)
     res = []
     for i in range(len(input)):
         line = input[i]
         temp = line.split(' ')
         index = check_for_macro(temp)
         if index != -1:
+            ALA.append(temp[1])
             while (MDT[index].lower() != "endm"):
                 temp_line = MDT[index]
                 if 'XX' in temp_line:
@@ -56,24 +57,33 @@ def phase_two():
                 index += 1
         else:
             res.append(line)
+    print_ala()
     return res
 
 def print_mdt():
-    mdt_table.field_names = ["Index", "MDT"]
+    mdt_table.field_names = ["Index", "Macro Definition"]
     for i in range(len(MDT)):
         mdt_table.add_row([i, MDT[i]])
     print(mdt_table)
 
 def print_mnt():
-    mnt_table.field_names = ["Index", "MNT"]
+    mnt_table.field_names = ["Index on MDT", "Macro Name"]
     for name in MNT:
         mnt_table.add_row([name[0], name[1]])
     print(mnt_table)
+
+def print_ala():
+    ala_table.field_names = ["Index", "Argument Name"]
+    for i in range(len(ALA)):
+        ala_table.add_row([i, ALA[i]])
+    print(ala_table)
 
 # MDT : Macro Definition Table
 MDT = []
 # MNT : Macro Name Table
 MNT = []
+# ALA : Argument List Array
+ALA = []
 
 input = ""
 with open('input.asm','r') as f:
